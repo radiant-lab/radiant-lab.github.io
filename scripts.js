@@ -1,22 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Mobile nav toggle
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
 
     burger.addEventListener('click', () => {
         nav.classList.toggle('active');
     });
-});
 
+    // Gallery thumbnail click handler
+    document.querySelectorAll('.portfolio-gallery').forEach(gallery => {
+        const featuredImage = gallery.querySelector('.featured-image');
+        const description = gallery.querySelector('.image-description');
 
-// Event listener for all thumbnails
-document.querySelectorAll('.thumbnail').forEach(thumbnail => {
-    thumbnail.addEventListener('click', function () {
-        const targetId = this.getAttribute('data-target');
-        const newImage = this.getAttribute('data-image');
-        const newDescription = this.getAttribute('data-description');
+        gallery.addEventListener('click', (event) => {
+            const thumb = event.target.closest('.thumbnail');
+            if (!thumb) return;
 
-        // Update the featured image and description
-        document.getElementById('featuredImage' + targetId).src = newImage;
-        document.getElementById('imageDescription' + targetId).textContent = newDescription;
+            const newSrc = thumb.getAttribute('data-image');
+            const newDesc = thumb.getAttribute('data-description');
+
+            if (featuredImage && newSrc) {
+                featuredImage.src = newSrc;
+            }
+
+            if (description && newDesc) {
+                description.textContent = newDesc;
+            }
+        });
     });
 });
